@@ -23,7 +23,6 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    /********work******/
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@Valid @RequestBody ReservationRequest request) {
         Reservation createdReservation = reservationService.createReservation(request.getMeetingRoomId(), request.getStartTime(), request.getEndTime());
@@ -31,7 +30,6 @@ public class ReservationController {
     }
 
 
-    /********work******/
     @PutMapping("/{id}")
     public ResponseEntity<Reservation> updateReservation(@Valid @PathVariable("id") Long reservationId,
                                                          @Valid @RequestParam LocalDateTime startTime,
@@ -40,7 +38,7 @@ public class ReservationController {
         return ResponseEntity.ok(updatedReservation);
     }
 
-    /********work******/
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@Valid @PathVariable("id") Long reservationId) {
         reservationService.deleteReservation(reservationId);

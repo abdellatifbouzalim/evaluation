@@ -26,18 +26,15 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation createReservation(Long meetingRoomId, LocalDateTime startTime, LocalDateTime endTime) {
-        // Vérifier s'il y a déjà une réservation pour la même salle et la même période
         List<Reservation> conflictingReservations = reservationRepository.findByMeetingRoomIdAndEndTimeGreaterThanEqualAndStartTimeLessThanEqual(meetingRoomId, startTime, endTime);
         if (!conflictingReservations.isEmpty()) {
             throw new ValidationException("Another reservation already exists for the given time period.");
         }
 
-        // Vérifier si l'heure de fin est postérieure à l'heure de début
         if (!endTime.isAfter(startTime)) {
             throw new ValidationException("End time must be after start time.");
         }
 
-        // Créer la nouvelle réservation
         MeetingRoom meetingRoom = meetingRoomRepository.findById(meetingRoomId)
                 .orElseThrow(() -> new NotFoundException("Meeting room not found with id: " + meetingRoomId));
 
@@ -46,7 +43,6 @@ public class ReservationServiceImpl implements ReservationService {
         newReservation.setStartTime(startTime);
         newReservation.setEndTime(endTime);
 
-        // Enregistrer la réservation
         return reservationRepository.save(newReservation);
     }
 

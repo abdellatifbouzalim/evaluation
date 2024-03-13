@@ -44,13 +44,11 @@ public class MeetingRoomServiceImpl implements MeetingRoomService {
         MeetingRoom existingMeetingRoom = meetingRoomRepository.findById(meetingRoomId)
                 .orElseThrow(() -> new NotFoundException("Meeting room not found with id: " + meetingRoomId));
 
-        // Supprimer toutes les réservations associées à la salle de réunion
         List<Reservation> reservations = existingMeetingRoom.getReservations();
         for (Reservation reservation : reservations) {
             reservationRepository.delete(reservation);
         }
 
-        // Ensuite, supprimer la salle de réunion
         meetingRoomRepository.delete(existingMeetingRoom);
     }
 

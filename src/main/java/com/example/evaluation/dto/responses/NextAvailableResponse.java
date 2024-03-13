@@ -11,10 +11,9 @@ public class NextAvailableResponse {
     private LocalDateTime nextAvailableDateTime;
     private String message;
 
-    // Ajoutez un constructeur surchargé pour deux arguments
     public NextAvailableResponse(Long roomId, LocalDateTime nextAvailableDateTime) {
         this.roomId = roomId;
         this.nextAvailableDateTime = nextAvailableDateTime;
-        this.message = null; // Ou un message par défaut si nécessaire
+        this.message = null;
     }
 }
